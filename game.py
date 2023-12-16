@@ -32,14 +32,82 @@ class Game:
 
     def print_grid(self):
         """
-        Affiche la grille de jeu actuelle.
+        Affiche la grille de jeu actuelle avec des numéros de lignes et de colonnes.
         """
-        for row in self.player_grid:
-            print(' '.join(row))
-        print()
+        # Afficher les numéros de colonne
+        header = '   ' + ' '.join([str(i).rjust(2) for i in range(self.width)])
+        print(header)
+        print('  +' + '--' * self.width + '+')
 
+        # Afficher chaque ligne avec son numéro de ligne
+        for y in range(self.height):
+            row = f'{y}'.rjust(2) + '| ' + ' '.join([cell.rjust(2) if cell != '*' else '■'.rjust(2) for cell in self.player_grid[y]]) + ' |'
+            print(row)
 
-# CODE DE TEST
-if __name__ == "__main__":
-    game = Game(10, 10, 20)  # Crée une grille 10x10 avec 20 mines
-    game.print_grid()  # Affiche la grille
+        print('  +' + '--' * self.width + '+')
+    
+    def calculate_adjacent_mines(self):
+        """
+        Calcule le nombre de mines adjacentes pour chaque case non minée.
+        """
+        for y in range(self.height):
+            for x in range(self.width):
+                if self.grid[y][x] == 'M':
+                    continue  # Pas besoin de calculer pour les mines
+
+                # Compter les mines dans les cases adjacentes
+                mine_count = 0
+                for dy in range(-1, 2):
+                    for dx in range(-1, 2):
+                        ny, nx = y + dy, x + dx
+                        if 0 <= ny < self.height and 0 <= nx < self.width and self.grid[ny][nx] == 'M':
+                            mine_count += 1
+
+                # Mettre à jour la grille avec le nombre de mines adjacentes
+                self.grid[y][x] = mine_count
+    
+    def discover_cell(self, x, y):
+        """
+        Gère la découverte d'une case. Retourne True si une mine est découverte.
+        """
+        if self.grid[y][x] == 'M':
+            print("Boom! Vous avez découvert une mine.")
+            return True
+
+        self.reveal_cell(x, y)
+        return False
+
+    def reveal_cell(self, x, y):
+        """
+        Révèle la case et, si elle a 0 mines adjacentes, révèle également les cases adjacentes.
+        """
+        if self.player_grid[y][x] != '*':
+            return  # La case est déjà révélée
+
+        self.player_grid[y][x] = str(self.grid[y][x])
+
+        if self.grid[y][x] == 0:
+            for dy in range(-1, 2):
+                for dx in range(-1, 2):
+                    ny, nx = y + dy, x + dx
+                    if 0 <= ny < self.height and 0 <= nx < self.width:
+                        self.reveal_cell(nx, ny)
+
+    def mark_mine(self, x, y):
+        """
+        Permet au joueur de marquer une case comme contenant une mine.
+        """
+        if self.player_grid[y][x] == '*':
+            self.player_grid[y][x] = 'M'
+        elif self.player_grid[y][x] == 'M':
+            self.player_grid[y][x] = '*'
+
+    def check_victory(self):
+        """
+        Vérifie si le joueur a gagné.
+        """
+        for y in range(self.height):
+            for x in range(self.width):
+                if self.player_grid[y][x] == '*' or (self.player_grid[y][x] == 'M' and self.grid[y][x] != 'M'):
+                    return False
+        return True
