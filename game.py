@@ -69,10 +69,14 @@ class Game:
     def discover_cell(self, x, y):
         """
         Gère la découverte d'une case. Retourne True si une mine est découverte.
+        False si la case a été découverte avec succès.
+        Et None si la case a déjà été découverte.
         """
+        if self.player_grid[y][x] != '*':  # Vérifier si la case a déjà été découverte
+            return None  # Retourner None si la case a déjà été découverte
+
         if self.grid[y][x] == 'M':
-            print("Boom! Vous avez découvert une mine.")
-            return True
+            return True  # La partie se termine si une mine est découverte
 
         self.reveal_cell(x, y)
         return False
@@ -104,10 +108,12 @@ class Game:
 
     def check_victory(self):
         """
-        Vérifie si le joueur a gagné.
+        Vérifie si le joueur a gagné, c'est-à-dire si toutes les cases non-minées ont été découvertes.
         """
         for y in range(self.height):
             for x in range(self.width):
-                if self.player_grid[y][x] == '*' or (self.player_grid[y][x] == 'M' and self.grid[y][x] != 'M'):
+                if self.grid[y][x] != 'M' and self.player_grid[y][x] == '*':
+                    # Il reste des cases non-minées à découvrir
                     return False
+        # Toutes les cases non-minées ont été découvertes
         return True

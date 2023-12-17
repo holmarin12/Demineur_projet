@@ -1,3 +1,15 @@
+def display_menu():
+    """
+    Affiche le menu principal du jeu et retourne le choix de l'utilisateur.
+    """
+    print("Menu du Démineur")
+    print("1. Démarrer une nouvelle partie")
+    print("2. Quitter")
+
+    choix = input("Entrez votre choix (1 ou 2): ")
+    return choix
+
+
 def get_game_parameters():
     """
     Demande à l'utilisateur de saisir les paramètres de la partie.
@@ -25,15 +37,18 @@ def get_valid_input(prompt, min_value=0, max_value=None):
 
 def get_player_action(height, width):
     """
-    Demande au joueur de choisir une action et de fournir les coordonnées.
+    Demande au joueur de choisir une action, de fournir les coordonnées, ou de revenir au menu.
     """
-    valid_actions = ['D', 'M']
+    valid_actions = ['D', 'M', 'R']  # Ajouter 'R' pour "Revenir au menu"
     action = ''
 
     while action not in valid_actions:
-        action = input("Choisissez une action (découvrir 'D', marquer 'M'): ").strip().upper()
+        action = input("Choisissez une action (Découvrir 'D', Marquer 'M', Revenir au menu 'R'): ").strip().upper()
         if action not in valid_actions:
-            print("Action non valide. Veuillez entrer 'D' pour découvrir ou 'M' pour marquer.")
+            print("Action non valide. Veuillez entrer 'D', 'M', ou 'R'.")
+
+    if action == 'R':  # Si l'utilisateur choisit de revenir au menu
+        return action, None, None
 
     x = get_valid_coordinate("Entrez la coordonnée X (colonne): ", width)
     y = get_valid_coordinate("Entrez la coordonnée Y (ligne): ", height)
