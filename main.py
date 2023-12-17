@@ -1,7 +1,16 @@
 import time
+import os
+import platform
 import ui
 from game import Game
 import scores
+
+
+def effacer_ecran():
+    if platform.system() == "Windows":
+        os.system('cls')
+    else:
+        os.system('clear')
 
 def demarrer_jeu(hauteur, largeur, nb_mines, personnalise=False, niveau=None):
     """
@@ -14,7 +23,9 @@ def demarrer_jeu(hauteur, largeur, nb_mines, personnalise=False, niveau=None):
     jeu_termine = False
     debut_jeu = time.time()  # Capture le temps de début de jeu
 
+
     while not jeu_termine:
+        effacer_ecran()  # Efface l'écran avant de réafficher la gril
         jeu.afficher_grille()
 
         action, x, y = ui.obtenir_action_joueur(jeu.hauteur, jeu.largeur)
