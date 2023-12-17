@@ -1,19 +1,19 @@
 def afficher_menu():
     """
-    Affiche le menu principal du jeu et demande à l'utilisateur de faire un choix.
-    Vérifie que l'entrée est valide avant de retourner le choix.
+    Affiche le menu principal du jeu.
     """
     print("Menu du Démineur")
     print("1. Démarrer une nouvelle partie personnalisable")
     print("2. Démarrer une partie par niveau")
-    print("3. Quitter")
+    print("3. Scores partie par niveau")
+    print("4. Quitter")
 
     while True:
-        choix = input("Entrez votre choix (1, 2 ou 3): ")
-        if choix in ['1', '2', '3']:
+        choix = input("Entrez votre choix (1, 2, 3 ou 4): ")
+        if choix in ['1', '2', '3', '4']:
             return choix
         else:
-            print("Choix non valide. Veuillez entrer 1, 2 ou 3.")
+            print("Choix non valide. Veuillez entrer 1, 2, 3 ou 4.")
 
 def obtenir_parametres_jeu():
     """
@@ -29,20 +29,22 @@ def obtenir_parametres_jeu():
 
 def choisir_niveau():
     """
-    Demande à l'utilisateur de choisir un niveau de difficulté pour la partie.
-    Vérifie que le choix est valide avant de retourner le niveau.
+    Permet à l'utilisateur de choisir un niveau de difficulté pour la partie.
+    Ajoute une option pour revenir au menu principal.
     """
     print("Choisissez un niveau de difficulté :")
     print("1. Facile (9x9 avec 10 mines)")
     print("2. Moyen (16x16 avec 40 mines)")
     print("3. Difficile (30x16 avec 99 mines)")
+    print("4. Revenir au menu")
 
     while True:
-        niveau = input("Entrez votre choix (1, 2 ou 3): ")
-        if niveau in ['1', '2', '3']:
+        niveau = input("Entrez votre choix (1, 2, 3 ou 4): ")
+        if niveau in ['1', '2', '3', '4']:
             return niveau
         else:
-            print("Choix non valide. Veuillez entrer 1, 2 ou 3.")
+            print("Choix non valide. Veuillez entrer 1, 2, 3 ou 4.")
+
 
 def obtenir_entree_valide(invite, valeur_min=0, valeur_max=None):
     """
