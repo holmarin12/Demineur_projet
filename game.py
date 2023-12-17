@@ -75,6 +75,9 @@ class Game:
         if self.player_grid[y][x] != '*':  # Vérifier si la case a déjà été découverte
             return None  # Retourner None si la case a déjà été découverte
 
+        if self.player_grid[y][x] == 'M':
+            return None  # La case est marquée comme mine, ne peut pas être découverte
+
         if self.grid[y][x] == 'M':
             return True  # La partie se termine si une mine est découverte
 

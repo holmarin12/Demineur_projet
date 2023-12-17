@@ -3,10 +3,11 @@ def display_menu():
     Affiche le menu principal du jeu et retourne le choix de l'utilisateur.
     """
     print("Menu du Démineur")
-    print("1. Démarrer une nouvelle partie")
-    print("2. Quitter")
+    print("1. Démarrer une nouvelle partie personnalisable")
+    print("2. Démarrer une partie par niveau")
+    print("3. Quitter")
 
-    choix = input("Entrez votre choix (1 ou 2): ")
+    choix = input("Entrez votre choix (1, 2 ou 3): ")
     return choix
 
 
@@ -20,6 +21,18 @@ def get_game_parameters():
     num_mines = get_valid_input("Entrez le nombre de mines : ", min_value=1, max_value=max_mines)
 
     return height, width, num_mines
+
+def choose_level():
+    """
+    Permet à l'utilisateur de choisir un niveau de difficulté.
+    """
+    print("Choisissez un niveau de difficulté:")
+    print("1. Facile (9x9 avec 10 mines)")
+    print("2. Moyen (16x16 avec 40 mines)")
+    print("3. Difficile (30x16 avec 99 mines)")
+
+    niveau = input("Entrez votre choix (1, 2 ou 3): ")
+    return niveau
 
 def get_valid_input(prompt, min_value=0, max_value=None):
     """
