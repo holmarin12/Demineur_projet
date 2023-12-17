@@ -2,11 +2,22 @@ def afficher_menu():
     """
     Affiche le menu principal du jeu.
     """
-    print("Menu du Démineur")
+
+    message_bienvenue = """
+    *****************************************************
+    *                                                   *
+    *      Bienvenue au jeu du Démineur en Python !     *
+    *                                                   *
+    *****************************************************
+    """
+    print(message_bienvenue.upper())
+    print("Menu du Démineur".upper())
+    print()
     print("1. Démarrer une nouvelle partie personnalisable")
     print("2. Démarrer une partie par niveau")
     print("3. Scores partie par niveau")
     print("4. Quitter")
+    print()
 
     while True:
         choix = input("Entrez votre choix (1, 2, 3 ou 4): ")
